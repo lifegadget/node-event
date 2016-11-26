@@ -1,3 +1,12 @@
 {
-  "extends": "tslint:latest"
+  "extends": "tslint:latest",
+    "rules": {
+    "quotemark": ["single"],
+    "no-console": [ false ],
+    "object-literal-sort-keys": false,
+    "no-trailing-whitespace": false,
+    "ordered-imports": [false],
+    "no-string-literal": false,
+    "max-line-length": [false]
+  }
 }

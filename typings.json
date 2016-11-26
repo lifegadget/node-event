@@ -1,0 +1,8 @@
+{
+  "globalDependencies": {
+    "axios": "registry:dt/axios#0.9.1+20161016142654",
+    "bluebird": "registry:dt/bluebird#3.0.0+20161007114152",
+    "stacktrace-js": "registry:dt/stacktrace-js#0.0.0+20160330154048",
+    "uuid": "registry:dt/uuid#3.3.0+20160728152600"
+  }
+}

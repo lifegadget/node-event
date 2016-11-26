@@ -1,0 +1,8 @@
+{
+  "resolution": "main",
+  "tree": {
+    "src": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/f9104f1e24c58134b99e03f3e28d71d1ca50fce4/stacktrace-js/stacktrace-js.d.ts",
+    "raw": "registry:dt/stacktrace-js#0.0.0+20160330154048",
+    "typings": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/f9104f1e24c58134b99e03f3e28d71d1ca50fce4/stacktrace-js/stacktrace-js.d.ts"
+  }
+}

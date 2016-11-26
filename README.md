@@ -1,25 +1,49 @@
-# Using this module in other modules
+# node-event
+> an event logger for NodeJS applications which works with the npm `serverless-event` microservice architecture
 
-Here is a quick example of how this module can be used in other modules. The [TypeScript Module Resolution Logic](https://www.typescriptlang.org/docs/handbook/module-resolution.html) makes it quite easy. The file `src/index.ts` acts as an aggregator of all the functionality in this module. It imports from other files and re-exports to provide a unified interface for this module. The _package.json_ file contains `main` attribute that points to the generated `lib/index.js` file and `typings` attribute that points to the generated `lib/index.d.ts` file.
+## Installation
 
-> If you are planning to have code in multiple files (which is quite natural for a NodeJS module) that users can import, make sure you update `src/index.ts` file appropriately.
-
-Now assuming you have published this amazing module to _npm_ with the name `my-amazing-lib`, and installed it in the module in which you need it -
-
-- To use the `Greeter` class in a TypeScript file -
-
-```ts
-import { Greeter } from "my-amazing-lib";
-
-const greeter = new Greeter("World!");
-greeter.greet();
+```sh
+npm install event-manager
 ```
 
-- To use the `Greeter` class in a JavaScript file -
+## Usage
 
 ```js
-const Greeter = require('my-amazing-lib').Greeter;
+const event = new EventManager(tagId, ['lambda', 'demo']);
+// alternatively add or adjust tags later with
+event.tags = ['lambda', 'demo', 'super-wow'];
 
-const greeter = new Greeter('World!');
-greeter.greet();
+// Log events
+event.info('hello world', {
+  transaction: tid
+});
+event.warn('it is getting cold');
+event.error('this aint working'); // specify a message (and optionally a hash)
+event.error(err); // just pass in an error object
+
+// Measure Performance (with type/subtype identifiers)
+const p1 = event.performance('shopping', 'checkout');
+p1.start();
+// ...
+p1.stop();
+
+// Add user context
+event.userLogin(uid, {
+  // add any user properties you want included 
+  // note: they'll be encoded for sensitivity concerns
+  foo: 'bar',
+  etc: 'whatever user props you like'
+});
+
+// Have more context that you'd like to go out with all events?
+event.context = {
+  transaction: tid,
+  foo: 'bar',
+};
 ```
+
+## Configuration
+
+
+
