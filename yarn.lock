@@ -14,6 +14,10 @@
   version "3.4.30"
   resolved "https://registry.yarnpkg.com/@types/chai/-/chai-3.4.30.tgz#d1e90d48d5d844fe2f56f0caf7f5aaebd2e29187"
 
+"@types/lodash@^4.14.40":
+  version "4.14.40"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.40.tgz#e67478f69bb1ad93a0e7ab6f3f276816d27088de"
+
 "@types/mocha@^2.2.33":
   version "2.2.33"
   resolved "https://registry.yarnpkg.com/@types/mocha/-/mocha-2.2.33.tgz#d79a0061ec270379f4d9e225f4096fb436669def"
@@ -444,6 +448,10 @@ lodash.keys@^3.0.0:
     lodash.isarguments "^3.0.0"
     lodash.isarray "^3.0.0"
 
+lodash@^4.17.2:
+  version "4.17.2"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.2.tgz#34a3055babe04ce42467b607d700072c7ff6bf42"
+
 lowercase-keys@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/lowercase-keys/-/lowercase-keys-1.0.0.tgz#4e3366b39e7f5457e35f1324bdf6f88d0bfc7306"
@@ -727,6 +735,10 @@ supports-color@3.1.2:
 supports-color@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-2.0.0.tgz#535d045ce6b6363fa40117084629995e9df324c7"
+
+test-console@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/test-console/-/test-console-1.0.0.tgz#118bb1e26988843a3985854a0adce4b472c38501"
 
 timed-out@^3.0.0:
   version "3.0.0"

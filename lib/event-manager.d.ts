@@ -11,8 +11,17 @@ export default class EventManager {
     private perfMeasurements;
     private user;
     private tagId;
+    private meta;
+    private _networkOutput;
+    private _consoleOutput;
     constructor(tagId?: string, tags?: string[]);
     userLogin(userId: string, userProps?: IDictionary<any>): void;
+    app(name: string): this;
+    architecture(arch: string): this;
+    component(name: string): this;
+    fn(name: string): this;
+    consoleOutput(flag: boolean): this;
+    networkOutput(flag: boolean): this;
     stackTrace(err: Error | null, incomingHash: IDictionary<any>): Promise<IDictionary<any>>;
     sendEvent(eventType: string): (hash: IDictionary<any>) => Promise<any>;
     createWorkflow(type: string, subType: string): WorkflowManager;

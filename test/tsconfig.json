@@ -5,15 +5,13 @@
     "target": "es2015",
     "moduleResolution": "node",
     "noImplicitAny": true,
-    "outDir": "./lib",
     "preserveConstEnums": true,
     "removeComments": true
   },
   "include": [
-    "src/**/*"
+    "*-spec.ts"
   ],
   "exclude": [
-    "node_modules",
-    "**/*-spec.ts"
+    "node_modules"
   ]
 }
