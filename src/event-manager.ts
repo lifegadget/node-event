@@ -2,6 +2,7 @@ import './common-types';
 import WorkflowManager from './workflow-manager';
 import * as workflow from './workflow-manager';
 import PerformanceManager from './performance-manager';
+import * as performance from './performance-manager';
 import * as StackTrace from 'stacktrace-js';
 import * as Promise from 'bluebird';
 import * as axios from 'axios';
@@ -77,7 +78,16 @@ export default class EventManager {
    * Sets a function name; intended to be set at the entry to a function point which has logging
    */
   public fn(name: string) {
-    this.meta['component'] = name;
+    this.meta['fn'] = name;
+    return this;
+  }
+
+  /**
+   * Allow setting a fixed "transaction ID" to allow event system to group events
+   * across systems
+   */
+  public transaction(id: string) {
+    this.meta['transactionId'] = id;
     return this;
   }
 
@@ -135,10 +145,29 @@ export default class EventManager {
           meta: this.meta,
         }, hash);
         if (this._consoleOutput) {
-          console.log(JSON.stringify(hash, null, 2));
+          if (eventType === 'log') {
+            console.log(JSON.stringify(hash, null, 2));
+          }
+          if (eventType === 'performance') {
+            console.log(`Performance for "${hash['metric']}" metric:`);
+            console.log('---------------------------' + Array(hash['metric'].length).join('-'));
+            if (console.table) {
+              console.table(hash['ticks']);
+            } else {
+              hash['ticks'].map((tick: performance.ITimingTick) => {
+                const stamp = typeof tick.timestamp === 'number' 
+                  ? utils.padLeft(20, tick.timestamp)
+                  : utils.padLeft(10, tick.timestamp[0]) + utils.padLeft(15, tick.timestamp[1]);
+                console.log(`${stamp} - ${tick['comment']}`);
+              });
+            }
+            console.log(`\nMeta information for performance run was:\n`, JSON.stringify( utils.without(hash, 'ticks', 'metric'), null, 2));
+          }
         }
 
         if (this._networkOutput) {
+          console.error('working ', eventType);
+          
           axios.post(EVENT_API_ENDPOINT, hash)
             .then(resolve)
             .catch( (err) => {
@@ -159,9 +188,9 @@ export default class EventManager {
     return wf;
   }
 
-  public createMeasurement(metric: string, options: IDictionary<any>) {
-    const perf = new PerformanceManager(metric, options, this.sendEvent('performance'));
-    this.perfMeasurements.push(perf);
+  public createMeasurement(metric: string, options?: IDictionary<any>) {
+    const perf = new PerformanceManager(metric, this.sendEvent('performance').bind(this));
+    this.perfMeasurements.push(perf); // TODO: is this needed?
     return perf;
   }
 
@@ -183,9 +212,15 @@ export default class EventManager {
   }
 
   protected log( messageOrError: string | Error, hash?: IDictionary<any> ): Promise<any> {
-    if (!hash['severity']) { hash['severity'] = 'info'; }
+    const severity = hash['severity'] || 'info';
+    let message: string;
+    let stack: any;
+    /** 
+     * If an error was passed in we need to approach 
+     * slightly differently
+     */
     if (typeof messageOrError !== 'string') {
-      hash = this.stackTrace(messageOrError, hash);
+      stack = this.stackTrace(messageOrError, hash);
       hash['message'] = messageOrError.message;
     } else {
       if (STACK_TRACE_LOG_LEVELS.filter((s: string) => s === hash['severity']).length > 0 ) {
@@ -195,6 +230,7 @@ export default class EventManager {
     }
     return this.sendEvent('log')(_.assign(hash, { 
       message: messageOrError,
+      severity: hash['severity'],
       meta: this.meta,
     }));
   }

@@ -104,4 +104,24 @@ describe("Event Manager", () => {
             done(err);
         });
     });
+    it.skip('performance measurement provides right number of lines of output', (done) => {
+        const event = new event_manager_1.default();
+        const perf = event.createMeasurement('testing');
+        let mute = test_console_1.stdout.inspect();
+        perf.start();
+        setTimeout(() => {
+            perf.tick('intermediate time');
+            perf.tick('intermediate time 2');
+            perf.tick('intermediate time 3');
+            setTimeout(() => {
+                perf.stop();
+                mute.restore();
+                const header = 2;
+                const events = 5;
+                const footer = 1;
+                chai_1.expect(mute.output).to.have.lengthOf(header + events + footer);
+                done();
+            }, 35);
+        }, 25);
+    });
 });

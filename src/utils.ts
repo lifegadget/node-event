@@ -25,3 +25,15 @@ export function gatewayResponse(
     headers: _.assign(defaultHeaders, headers),
   }
 }
+
+
+export function without (dict: IDictionary<any>, ...without: string[]) {
+  const narrow = _.assign({}, dict);
+  without.map((i: string) => delete narrow[i]);
+  return narrow;
+}
+
+export function padLeft(width: number, value: any, padding = ' '): string {
+  const str = String(value); 
+  return (width <= str.length) ? str : padLeft(width, padding + str, padding);
+}
