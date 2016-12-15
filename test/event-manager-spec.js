@@ -1,7 +1,7 @@
 "use strict";
-require('./test-setup');
+require("./test-setup");
 const chai_1 = require("chai");
-const test_console_1 = require('test-console');
+const test_console_1 = require("test-console");
 const event_manager_1 = require("../src/event-manager");
 describe("Event Manager", () => {
     it("can instantiate", () => {

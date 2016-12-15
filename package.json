@@ -49,8 +49,8 @@
     "rimraf": "^2.5.4",
     "test-console": "^1.0.0",
     "ts-node": "^1.2.2",
-    "tslint": "4.0.1",
-    "typescript": "2.0.3"
+    "tslint": "^4.0.2",
+    "typescript": "^2.1.4"
   },
   "engines": {
     "node": ">=4.0.0"
